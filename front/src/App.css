@@ -1,0 +1,53 @@
+body{
+  background-color: #888;
+  font-family: helvetica;
+}
+body *{
+  color:ghostwhite;
+  transition: all .2s;
+}
+
+.hand img{
+  padding: 5px;
+  border-radius: 42%;
+}
+
+.name>div{
+  font-size:1.5rem;
+  font-family: monospace;
+  letter-spacing: 5px;
+  display:grid;
+  justify-items: center;
+}
+
+.footer button{
+  opacity:.6;
+
+}
+.footer button:hover{
+  opacity:1;
+  box-shadow: 0 0 16px 1px cyan;
+}
+
+
+
+@keyframes shiver{
+  50%{
+    transform: 'translate(-4px,4px) rotate(-5deg, 5deg)';
+  }
+  100%{
+    transform: 'translate(4px,-4px) rotate(5deg, -5deg)';
+  }
+  
+}
+
+@media (max-aspect-ratio:3/4){
+  .name>div{
+    font-size:1rem;
+    letter-spacing: 2px;
+  }
+  .hand img{
+    transform: scale(.6);
+  }
+}
+
