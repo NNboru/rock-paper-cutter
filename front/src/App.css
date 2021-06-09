@@ -32,22 +32,18 @@ body *{
 
 
 @keyframes shiver{
-  50%{
-    transform: 'translate(-4px,4px) rotate(-5deg, 5deg)';
-  }
   100%{
-    transform: 'translate(4px,-4px) rotate(5deg, -5deg)';
+    transform: translate(2px,-2px) rotate(2deg);
   }
-  
 }
 
 @media (max-aspect-ratio:3/4){
   .name>div{
-    font-size:1rem;
-    letter-spacing: 2px;
+    font-size: 1.2rem;
+    letter-spacing: 3px;
   }
   .hand img{
-    transform: scale(.6);
+    zoom: .6;
   }
 }
 

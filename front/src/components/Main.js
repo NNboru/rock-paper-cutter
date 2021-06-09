@@ -7,36 +7,40 @@ class Main extends React.Component{
   constructor(props){
     super(props)
     this.state={
-      players:{
-        'ron':['',2],
-      },
-      count:1,
+      ...this.props.room,
       name:''
     }
+    this.reveal=false
   }
 
-  setName = async (name,myModal)=>{
-    if(name==='' || this.state.players[name]) return
-    let resp = await fetch('/room/'+this.props.roomid+'/addme', {'method':'POST', body:name})
-    if(!resp.ok) return resp.text().then(v=>document.body.innerHTML=v)
-
+  setName = (name,myModal)=>{
+    if(name==='') return
+    if(this.state.players[name] && this.state.players[name].status==='on')
+      return 'exist'
+    // tell server to add new player
     myModal.hide()
-    this.setState(s=>{return {
-      name,
-      count:s.count+1,
-      players:{
-        ...s.players, 
-        [name]:['',0]}
+    this.socket.emit('room add', this.props.roomid, name, ac=>{
+      if(ac==='ok'){
+        this.setState({name})
       }
+      else console.log('error ', 'ac not ok in setname')
     })
+    
+  }
+
+  notify = msg=>{
+    alert(msg)
   }
 
   play = v=>{
+    // tell server you played your turn
+    this.socket.emit('room play', v)
+    // update state only if acknowledgement received
     this.setState(s=>{
       const clone = JSON.parse(JSON.stringify(s.players))
-      clone[s.name][0]=v
+      clone[s.name].choice = v
       return {
-        players:clone
+        players: clone
       }
     })
   }
@@ -51,11 +55,64 @@ class Main extends React.Component{
     }
     return (
       <>
-        <Allhands players={this.state.players} count={this.state.count} />
-        {(this.state.players[this.state.name][0]!=='') || <Footer play={this.play} />}
+        <Allhands players={this.state.players} 
+                  count  ={this.state.count}
+                  reveal ={this.reveal}
+        />
+        {(this.state.players[this.state.name].choice>=0) || <Footer play={this.play} />}
       </>
     )
   }
+
+  componentDidMount(){
+    this.socket = this.props.socket
+
+    // when a player plays his turn
+    this.socket.on('room play', (name, value)=>{
+      this.setState(s=>{
+        const players = JSON.parse(JSON.stringify(s.players))
+        players[name].choice = value
+        return {players}
+      })
+      // if(this.state.played === this.state.count){
+      //   // all players played their turn
+      //   console.log('who win?')
+      // }
+    })
+
+    // when a new player enters
+    this.socket.on('room add', (room)=>{
+      room.name=this.state.name
+      this.setState(room)
+    })
+    
+    this.socket.on('room delete', (room)=>{
+      room.name=this.state.name
+      this.setState(room)
+    })
+
+    // its time to see who win!
+    this.socket.on('room reveal', (res, room)=>{
+      room.name=this.state.name
+      this.reveal=res
+      this.setState(room)
+
+      // reset room after 4 seconds
+      setTimeout(()=>{
+        this.reveal=false
+        this.setState(s=>{
+          const players = JSON.parse(JSON.stringify(s.players))
+          for(let p in players){
+            delete players[p].choice
+          }
+          return {players}
+        })
+      }, 2000 )
+    })
+
+
+  }
+
 }
 
 export default Main;

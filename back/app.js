@@ -7,11 +7,17 @@ var dotenv = require('dotenv')
 
 dotenv.config()
 
-var indexRouter = require('./routes/index');
-var roomRouter = require('./routes/room');
-
 var app = express();
 const log = console.log
+
+// socket.io
+const server = require('http').createServer(app)
+const io = new (require('socket.io').Server)(server)
+
+// route files
+require('./routes/socket')(io)
+var indexRouter = require('./routes/index');
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -24,7 +30,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/room', roomRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -41,5 +46,5 @@ app.use(function(err, req, res, next) {
   res.render('error'); 
 });
 
-app.listen(process.env.PORT || 2000, ()=> log('server started..'))
+server.listen(process.env.PORT || 2000, ()=> log('server started..'))
 

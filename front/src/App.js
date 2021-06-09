@@ -5,6 +5,7 @@ import Header from './components/Header.js'
 import Home from './components/Home.js'
 import Main from './components/Main.js'
 import Loader from './components/Loader.js'
+import {io} from 'socket.io-client'
 
 class App extends React.Component{
   constructor(props){
@@ -13,6 +14,14 @@ class App extends React.Component{
       loading: true,
       error  : false
     }
+  }
+  
+  getRoom = ()=>{
+    this.socket = io()
+    this.socket.emit('get room', this.roomid, room=>{
+      this.room = room
+      this.setState({loading:false})
+    })
   }
 
   render(){
@@ -26,7 +35,7 @@ class App extends React.Component{
               this.roomid=roomid
               return this.state.loading? 
                 <Loader error={this.state.error} /> : 
-                <Main players={this.players} roomid={roomid} /> 
+                <Main socket={this.socket} room={this.room} roomid={roomid} /> 
             }} />
             <Route exact path='/'>
               <Home />
@@ -39,18 +48,16 @@ class App extends React.Component{
   }
 
   componentDidMount(){
-    fetch(`/room/${this.roomid}/players`).then(v=>{
-      if(v.ok)
-        return v.json();
-      v.text().then(e=>document.body.innerHTML=e)
-      throw new Error('Error '+v.status + ': '+v.statusText)
-    }).then(players=>{
-      this.players = players;
-      this.setState({loading:false})
-    }).catch(e=>{
-      this.setState({error:e.message})
-    })
+    // preloading images
+    new Image().src = '/img/stone.png'
+    new Image().src = '/img/paper.png'
+    const img = new Image()
+    img.addEventListener('load', this.getRoom )
+    img.src = '/img/scissor.png'
+
+
   }
+
 }
 
 export default App;

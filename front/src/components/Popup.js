@@ -8,17 +8,18 @@ class Popup extends React.Component {
     }
 
     setName = e=>{
+        e.preventDefault()
         const val = this.refinp.current.value
-        this.props.setName(val,this.myModal)
-        return false
+        if(this.props.setName(val,this.myModal) === 'exist'){
+            this.refinp.current.classList.add('is-invalid')
+        }
 
     }
     update = e=>{
         let cur=this.refinp.current, val = cur.value
         val = val.replaceAll(/[^ \w-]/g,'').substr(0,16)
         cur.value = val
-        // if(this.state.players[val]) cur.classList.add('is-invalid')
-        // else cur.classList.remove('is-invalid')
+        cur.classList.remove('is-invalid')
     }
 
     render() {
@@ -37,7 +38,9 @@ class Popup extends React.Component {
                                 onInput={this.update}
                                 spellCheck='false'
                                 placeholder='name' 
-                                required />
+                                autoFocus
+                                required 
+                        />
                         <div className='invalid-feedback'>Player with this name already exists.</div>
                         <button className='btn btn-lg btn-primary'>GO</button>
                         <br />
