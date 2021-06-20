@@ -58,7 +58,7 @@ class Main extends React.Component{
       <>
         <button className="iconMenu btn btn-outline-primary position-absolute top-0 start-0 m-1 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#divoffcanvas">
           <span>|||</span>
-          <span id='spanMsgCnt'>5</span>
+          <span id='spanMsgCnt'></span>
         </button>
         
         <Allhands players={this.state.players} 

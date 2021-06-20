@@ -115,8 +115,10 @@ module.exports = function(io){
             const r = rooms[socket.room]
             for(let p in r.players){
                 r.players[p].wins=0
+                delete r.players[p].choice
             }
-            io.to(socket.room).emit('room reset', socket.name, r)
+            r.played=0
+            io.to(socket.room).emit('room reset', socket.name, fakeit(r))
         })
 
         // a player disconnected
