@@ -104,17 +104,32 @@ module.exports = function(io){
                     delete r.players[p].choice
             }
         })
+
+        // player send a chat msg
+        socket.on('room msg', val=>{
+            io.to(socket.room).emit('room msg', socket.name, val)
+        })
+
+        // player resetted room score
+        socket.on('room reset', v=>{
+            const r = rooms[socket.room]
+            for(let p in r.players){
+                r.players[p].wins=0
+            }
+            io.to(socket.room).emit('room reset', socket.name, r)
+        })
+
         // a player disconnected
         socket.on('disconnecting', ()=>{
             if(!socket.room || !rooms[socket.room]) return
             if(rooms[socket.room].count===1){
-                delete room[socket.room]
+                delete rooms[socket.room]
             }
             else{
                 rooms[socket.room].count--
                 rooms[socket.room].players[socket.name].status='off'
+                socket.to(socket.room).emit('room delete', fakeit(rooms[socket.room]))
             }
-            socket.to(socket.room).emit('room delete', fakeit(rooms[socket.room]))
         })
     })
 }

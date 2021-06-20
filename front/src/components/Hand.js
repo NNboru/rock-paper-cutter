@@ -7,7 +7,11 @@ class Hand extends React.Component {
       let h = Number.parseInt(50+100/count)
       const bias = Math.abs(90-angle%180)*.18;
       const choice = ['stone', 'paper', 'scissor']
-      let trans = ((window.innerWidth>window.innerHeight)?(8+(16-bias)+'vw'):(8+bias+'vw'));
+      const trans = ((window.innerWidth>window.innerHeight)?(8+(16-bias)+'vw'):(8+bias+'vw'));
+      const sty = {height:h+'px'}
+      if(!(stat.choice>=0)){
+        sty['animation']='shiver infinite alternate ease-in-out .1s'
+      }
     return (
         <div className='hand' style={{
                 transform: `rotateZ(${angle}deg) translateY(calc(40px + ${trans}))`,
@@ -17,15 +21,12 @@ class Hand extends React.Component {
         }}>
             <div>
                 {
-                    !(stat.choice>=0)?
-                        <img src='/img/stone.png' 
-                            style={{height:h+'px', animation:'shiver infinite alternate ease-in-out .1s'}} 
-                            alt='stone'
-                        />
-                    :<img src={`/img/${choice[stat.choice]}.png`} 
-                            style={{height:h+'px', backgroundColor:color}} 
-                            alt={stat[0]} 
-                        />
+                    <img src={(stat.choice>=0)? `/img/${choice[stat.choice]}.png`
+                                              : '/img/stone.png'}
+                         style={sty}
+                         className={color}
+                         alt=''
+                    />
                 }
             </div>
             <div className='name'>

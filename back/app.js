@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var dotenv = require('dotenv')
+const mongoose = require('mongoose')
 
 dotenv.config()
 
@@ -18,6 +19,15 @@ const io = new (require('socket.io').Server)(server)
 require('./routes/socket')(io)
 var indexRouter = require('./routes/index');
 
+// mongoose db connect
+mongoose.connect(process.env.DB, {
+  useNewUrlParser : true,
+  useUnifiedTopology : true,
+  useCreateIndex : true
+}).then(con => {
+  console.log('MongoDB Database connected successfully.');
+})
+mongoose.connection.on('error', e=> console.error('Error connecting to mongoDB : '+e))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

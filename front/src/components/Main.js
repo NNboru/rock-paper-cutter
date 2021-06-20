@@ -2,6 +2,7 @@ import React from 'react';
 import Popup from './Popup.js'
 import Footer from './Footer.js'
 import Allhands from './Allhands.js'
+import Offcanvas from './Offcanvas'
 
 class Main extends React.Component{
   constructor(props){
@@ -55,11 +56,18 @@ class Main extends React.Component{
     }
     return (
       <>
+        <button className="iconMenu btn btn-outline-primary position-absolute top-0 start-0 m-1 ms-1" type="button" data-bs-toggle="offcanvas" data-bs-target="#divoffcanvas">
+          <span>|||</span>
+          <span id='spanMsgCnt'>5</span>
+        </button>
+        
         <Allhands players={this.state.players} 
                   count  ={this.state.count}
                   reveal ={this.reveal}
         />
         {(this.state.players[this.state.name].choice>=0) || <Footer play={this.play} />}
+
+        <Offcanvas roomName={this.state.name} socket={this.props.socket} />
       </>
     )
   }
@@ -86,6 +94,7 @@ class Main extends React.Component{
       this.setState(room)
     })
     
+    // a player left room
     this.socket.on('room delete', (room)=>{
       room.name=this.state.name
       this.setState(room)
@@ -110,7 +119,11 @@ class Main extends React.Component{
       }, 2000 )
     })
 
-
+    // a player resetted room score
+    this.props.socket.on('room reset', (name, room)=>{
+      room.name=this.state.name
+      this.setState(room)
+    })
   }
 
 }

@@ -17,7 +17,7 @@ class Popup extends React.Component {
     }
     update = e=>{
         let cur=this.refinp.current, val = cur.value
-        val = val.replaceAll(/[^ \w-]/g,'').substr(0,16)
+        val = val.replaceAll(/[^ \w-]/g,'').substr(0,12)
         cur.value = val
         cur.classList.remove('is-invalid')
     }
@@ -37,8 +37,7 @@ class Popup extends React.Component {
                                 ref={this.refinp}
                                 onInput={this.update}
                                 spellCheck='false'
-                                placeholder='name' 
-                                autoFocus
+                                placeholder='name'
                                 required 
                         />
                         <div className='invalid-feedback'>Player with this name already exists.</div>
@@ -56,6 +55,7 @@ class Popup extends React.Component {
         frm.onsubmit=this.setName
         this.myModal = new Modal(document.getElementById('modname'),{backdrop:'static',keyboard:false})
         this.myModal.show()
+        this.refinp.current.focus()
     }
 }
 

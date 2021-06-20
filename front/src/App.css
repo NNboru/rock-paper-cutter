@@ -1,16 +1,108 @@
 body{
-  background-color: #888;
-  font-family: helvetica;
+  background-color: #125a;
+  font-family: system-ui, helvetica, cursive;
 }
 body *{
   color:ghostwhite;
-  transition: all .2s;
+  transition: all .2s;  
+}
+a{
+  text-decoration: none;
+  color: dodgerblue;
+}
+
+header{
+  background-color: black;
+  color:cadetblue;
+}
+
+
+.iconMenu{
+  padding: 6px 11px 6px 16px;
+}
+.iconMenu:hover{
+  background-color: #0d6efd6b;
+}
+.iconMenu>span:nth-child(1){
+  display: inline-block;
+  transform: rotateZ(90deg);
+  font-size: 20px;
+}
+#spanMsgCnt{
+  position: absolute;
+  display: inline-block;
+  color: cyan;
+  right: -5px;
+  bottom: -30%;
+  font-size: 1.4rem;
+}
+.iconHome{
+  height:40px;
+  width:50px;
+  background-color: rgba(0, 153, 255, 0.534);
+  border-radius: 50%;
+  text-align: center;
+}
+
+.offcanvas-header{
+  background-color: #DDD;
+}
+.offcanvas-header>a:hover>img{
+  background-color: rgba(0, 153, 255, 0.8);
+  transition: all .4s;
+}
+.offcanvas-header>a:hover>span{
+  letter-spacing: 1px;
+  transform: translateX(-2px);
+  text-shadow: 0 0 32px lime;
+  transition: all .4s;
+}
+
+#divchatbox{
+  height: calc( 100% - 90px );
+  overflow-y: auto;
+}
+#divchatbox>div{
+  margin:2px;
+  margin-bottom: 12px;
+  background-color: #EEF;
+  padding-top: 0;
+}
+#divchatbox>div>.name{
+  padding:2px;
+  padding-left: 4px;
+  color: green;
+  font-size: .9rem !important;
+  background-color: azure;
+  line-height: .9rem;
+}
+#divchatbox>div>.msg{
+  padding:2px;
+  font-size: 1.1rem !important;
+  color:black;
+  padding-left: 8px;
 }
 
 .hand img{
+  /* width:0; */
   padding: 5px;
   border-radius: 42%;
+  margin: auto;
+  display: block;
 }
+.transparent{
+  animation: ani-color1 forwards 1s ;
+}
+.lawngreen{
+  animation: ani-color2 forwards 1s ;
+}
+.orangered{
+  animation: ani-color3 forwards 1s ;
+}
+.beige{
+  animation: ani-color4 forwards 1s ;
+}
+
 
 .name>div{
   font-size:1.5rem;
@@ -18,6 +110,10 @@ body *{
   letter-spacing: 5px;
   display:grid;
   justify-items: center;
+}
+
+.vh-80{
+  height:80vh;
 }
 
 .footer button{
@@ -29,13 +125,139 @@ body *{
   box-shadow: 0 0 16px 1px cyan;
 }
 
+.mycontainer{
+  position: relative;
+  top: -10vh;
+  height: 100vh;
+  margin: auto;
+  width: fit-content;
+  z-index: 1;
+}
+.mycontainer>div{
+  height:100%;
+}
+.mycontainer>div>div{
+  height:100%;
+}
+
+.divMyloader{
+  background-color: rgba(172, 255, 47, 0.1);
+  animation: aniback alternate infinite 4s;
+  z-index: 5;
+}
+
+.popper{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.popper>span{
+  display: inline-block;
+  animation: anitxt 6s;
+  transform: scale(0)  skew(-4deg);
+  opacity: 0;
+  margin:4px;
+}
+
+.divAllhandsHome .hand{
+  opacity: .2;
+  animation: aniAllhands ease-in-out 8s;
+}
+
+.link{
+  z-index: 2;
+}
+.link img{
+  animation:anilink alternate infinite 1.5s;
+  width:32px;
+  opacity: .1;
+}
+
+.divform2{
+  background-color: #4d5c89;  
+}
+
+.divform{
+  background-color: #223e;
+  border-radius: 2%;
+}
+.divform:hover{
+  transform: scale(1.02);
+  background-color: #223;
+}
+.divform label{
+  margin-bottom: 4px;
+}
 
 
-@keyframes shiver{
-  100%{
-    transform: translate(2px,-2px) rotate(2deg);
+@keyframes anilink{
+  to{
+    transform: translateY(8px) scale(1.1);
+    opacity: .8;
   }
 }
+@keyframes aniback{
+  to{
+    background-color: rgba(0, 255, 255, 0.1);
+  }
+}
+@keyframes anitxt{
+  20%{
+    transform:translateZ(-4px) translateY(-8px);
+    opacity: 1;
+  }
+  72%{
+    transform:scale(1.2) translateZ(4px) skew(4deg);
+    color:cyan;
+    text-shadow: 0 0 2px white, 2px 2px 2px lime;
+    font-weight: 500;
+    opacity: 1;
+  }
+  
+  100%{
+    transform:scale(0) rotateZ(180deg) ;
+    color:rgb(0, 68, 255);
+    opacity: 0;
+  }
+}
+@keyframes aniAllhands{
+  50%{
+    opacity: .4;
+  }
+  95%{
+    opacity: 1;
+  }
+  100%{
+    opacity: .2;
+  }
+}
+@keyframes shiver{
+  100%{
+    transform: translate(4px,-4px) rotate(8deg);
+  }
+}
+@keyframes ani-color1{
+  100%{
+    background-color:transparent;
+  }
+}
+@keyframes ani-color2{
+  100%{
+    background-color:lawngreen;
+  }
+}
+@keyframes ani-color3{
+  100%{
+    background-color:orangered;
+  }
+}
+@keyframes ani-color4{
+  100%{
+    background-color:beige;
+  }
+}
+
 
 @media (max-aspect-ratio:3/4){
   .name>div{
@@ -43,7 +265,7 @@ body *{
     letter-spacing: 3px;
   }
   .hand img{
-    zoom: .6;
+    zoom: .8;
   }
 }
 
