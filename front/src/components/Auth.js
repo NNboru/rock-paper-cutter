@@ -1,7 +1,6 @@
 import React from 'react';
 import Loader from './Loader';
 import LoadMain from './LoadMain.js'
-import { setCookie,getCookie } from '../cookie';
 import { withRouter } from 'react-router-dom';
 
 class Auth extends React.Component {
@@ -12,6 +11,39 @@ class Auth extends React.Component {
         };
     }
 
+    getCookie = name=>{
+        let matches = document.cookie.match(new RegExp(
+          "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + "=([^;]*)"
+        ));
+        return matches ? decodeURIComponent(matches[1]) : undefined;
+    }
+
+    setCookie = (name, value, options = {})=> {
+
+        options = {
+          path: '/',
+          // add other defaults here if necessary
+          ...options
+        };
+      
+        if (options.expires instanceof Date) {
+          options.expires = options.expires.toUTCString();
+        }
+      
+        let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
+      
+        for (let optionKey in options) {
+          updatedCookie += "; " + optionKey;
+          let optionValue = options[optionKey];
+          if (optionValue !== true) {
+            updatedCookie += "=" + optionValue;
+          }
+        }
+      
+        document.cookie = updatedCookie;
+    }
+      
+      
     render() {
         if(this.state.loading)
             return <Loader />
@@ -26,11 +58,11 @@ class Auth extends React.Component {
 
         // check if password is in url or cookie
         if(pass){
-            setCookie('pass', pass, {path:'/room/'+roomid})
+            this.setCookie('pass', pass, {path:'/room/'+roomid})
             history.push(`/room/${roomid}`)
         }
         else{
-            pass = getCookie('pass')
+            pass = this.getCookie('pass')
             if(!pass){
                 alert("You didn't entered password : "+document.cookie)
                 history.push('/')

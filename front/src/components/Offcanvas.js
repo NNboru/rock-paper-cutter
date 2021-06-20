@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {getCookie} from '../cookie'
 
 class Offcanvas extends React.Component {
 
@@ -8,8 +7,15 @@ class Offcanvas extends React.Component {
     this.props.socket.emit('room reset', '')
   }
 
+  getCookie = name=>{
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+
   shareRoom = ()=>{
-    const url = window.location.origin+'/room/'+this.props.roomName+'/'+getCookie('pass');
+    const url = window.location.origin+'/room/'+this.props.roomName+'/'+this.getCookie('pass');
     if(!navigator.share){
       navigator.share({
         title:'👊✋✌',
