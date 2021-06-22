@@ -1,9 +1,8 @@
 # [Rock Paper Scissors!](https://play-rock.cloudno.de)
 
-This directory contains react front end code.
+This directory contains express back-end code.
 
-For testing and development of front-end, run `npm start` from this directory.
-To direct requests to node server add `"proxy": "http://localhost:2000"` in _front/package.json_ file.
+To run local server for development, run `node app` from this directory.
 
 For production build -
 - In _front directory_ run `npm run build` and copy these files to _back directory_ -
@@ -11,5 +10,11 @@ For production build -
     - `front/build/*` to `back/public/*`
     - Then from _back directory_ run `node app` to start local server at port 2000.
 
-<br />
- _This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)._
+Dependencies for this project -
+- cookie-parser
+- dotenv
+- ejs
+- express
+- mongoose
+- morgan
+- socket.io
