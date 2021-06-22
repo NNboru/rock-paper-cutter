@@ -1,6 +1,6 @@
 # [Rock Paper Scissors!](https://play-rock.cloudno.de)
 
-[![alt text](https://github.com/nnboru/rock-paper-cutter/raw/main/ss.png) 'screenshot')](https://play-rock.cloudno.de)
+[![alt text](https://github.com/nnboru/rock-paper-cutter/raw/main/ss.png 'screenshot')](https://play-rock.cloudno.de)
 
 <br />
 
