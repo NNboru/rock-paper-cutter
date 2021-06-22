@@ -12,4 +12,5 @@ For production build -
     - Then from _back directory_ run `node app` to start local server at port 2000.
 
 <br />
- _This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)._
+
+_This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)_
