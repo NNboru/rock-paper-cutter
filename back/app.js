@@ -7,6 +7,7 @@ var dotenv = require('dotenv')
 const mongoose = require('mongoose')
 
 dotenv.config({ path: path.resolve(__dirname, './.env') })
+console.log('directory root : ' + __dirname);
 
 var app = express();
 const log = console.log
