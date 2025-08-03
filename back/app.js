@@ -27,7 +27,9 @@ mongoose.connect(process.env.DB, {
   useCreateIndex : true
 }).then(con => {
   console.log('MongoDB Database connected successfully.');
-})
+}).catch(e => {
+  console.error('mongoDB error : '+ e);
+});
 mongoose.connection.on('error', e=> console.error('Error connecting to mongoDB : '+e))
 
 // view engine setup
