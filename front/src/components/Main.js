@@ -67,7 +67,7 @@ class Main extends React.Component{
         />
         {(this.state.players[this.state.name].choice>=0) || <Footer play={this.play} />}
 
-        <Offcanvas roomName={this.state.name} socket={this.props.socket} />
+        <Offcanvas roomName={this.props.roomid} socket={this.props.socket} />
       </>
     )
   }

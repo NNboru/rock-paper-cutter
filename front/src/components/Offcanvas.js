@@ -11,12 +11,12 @@ class Offcanvas extends React.Component {
     let matches = document.cookie.match(new RegExp(
       "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, '\\$1') + "=([^;]*)"
     ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
+    return matches ? decodeURIComponent(matches[1]) : '';
   }
 
   shareRoom = ()=>{
     const url = window.location.origin+'/room/'+this.props.roomName+'/'+this.getCookie('pass');
-    if(!navigator.share){
+    if(navigator.share){
       navigator.share({
         title:'👊✋✌',
         text:'Lets play Rock-paper-cutter, infinity multiplayer online game!',
